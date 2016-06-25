@@ -1,0 +1,132 @@
+body{
+	background: #BDB76B;
+	padding: 10em;
+	border: 20em;
+}
+
+
+#mainContainer{
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+}
+
+#iotManagerFooter{
+    padding: 20px;
+    background-color: #BDB76B;
+    color: white;
+}
+
+#theJammerHeader{
+    font-size: 2em;   
+}
+
+#iotManagerHeader,#tabselector ul{
+    list-style: none;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #BDB76B;
+    color: white;
+}
+
+#tabselector ul li{
+    float: left;
+    padding: 10px 20px;
+}
+
+#tabselector ul li.selected, #tabselector ul li:hover{
+    background-color: white; 
+    color: #808000;
+}
+
+#tabselector ul li:hover{
+    cursor: pointer;   
+}
+
+#tabcontent > div{
+    display:none;
+    padding: 5px;
+    text-align: left;
+    background: rgb(242,242,242);
+    /*background-image: url('../img/iotDevicespng');*/
+}
+
+#tabcontent > div.active{
+    display: block;   
+}
+
+#tabselector{
+    margin: 20px;
+    border: 1px solid #808000;
+
+}
+
+#content-home{
+    text-align: center;
+}
+
+
+#logout{
+    float: right !important;
+	color: white;
+	background-color:#808000;
+}
+img{
+	position:relative;
+	width: 100%;
+}
+#userHeader{
+	position: absolute;
+	top:200px;
+	left:200px;
+	width: 100%;
+}
+#userHeader > span{
+	color: white; 
+   font: bold 24px/45px Helvetica, Sans-Serif; 
+   letter-spacing: 5px;  
+   background: rgb(0, 0, 0); /* fallback color */
+   background: rgba(0, 0, 0, 0.7);
+   padding: 10px; 
+}
+#addDeviceBtn{
+    float: right !important;
+    font-size: 20px;
+    padding: 10px;
+    width:100px;
+    height: 100px;
+    background-color: red;
+    color: white;
+    text-align: center;
+}
+#addLinkUserBtn{
+    float: right !important;
+    font-size: 20px;
+    padding: 10px;
+    width:100px;
+    height: 100px;
+    background-color: blue;
+    color: white;
+    text-align: center;
+}
+#addHouseButton{
+    float: right !important;
+    font-size: 10px;
+    padding: 10px;
+    width:100px;
+    height: 100px;
+    background-color: yellow;
+    color: black;
+    text-align: center;
+}
+.button{
+	color:white;
+	font-size: 14px;
+	padding: 20px;
+	background-color: #808000;
+}
+.focoImg{
+	width:100px;
+	height:100px;
+}

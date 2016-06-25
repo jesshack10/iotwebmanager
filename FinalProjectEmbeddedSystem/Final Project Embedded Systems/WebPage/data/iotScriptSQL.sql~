@@ -1,0 +1,54 @@
+CREATE TABLE Users (
+	idUser int(4) NOT NULL PRIMARY KEY,
+	username VARCHAR(30) NOT NULL,
+    fName VARCHAR(30) NOT NULL,
+	lName VARCHAR(30) NOT NULL,
+    pass VARCHAR(50) NOT NULL
+);
+
+
+CREATE TABLE House (
+	idHouse int(4) NOT NULL PRIMARY KEY,
+    address VARCHAR(30) NOT NULL,
+    num int(5) NOT NULL,
+    phone VARCHAR(30) NOT NULL,
+    idUser int(4) NOT NULL,
+    
+    FOREIGN KEY (idUser) REFERENCES Users(idUser)  
+);
+
+CREATE TABLE Actuator (
+	idActuator int(4) NOT NULL PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    status int(1) NOT NULL,
+    idHouse int(4) NOT NULL,
+    room VARCHAR(20) NOT NULL,
+
+    FOREIGN KEY (idHouse) REFERENCES House(idHouse)  
+);
+
+CREATE TABLE Sensor (
+	idSensor int(4) NOT NULL PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    idHouse int(4) NOT NULL,
+    room VARCHAR(20) NOT NULL,
+    readVal float(5) NOT NULL,
+
+    FOREIGN KEY (idHouse) REFERENCES House(idHouse)  
+);
+
+INSERT INTO Users VALUES(0001,'Jesshack10' ,'Jesús', 'Ramírez', 'chibios');
+INSERT INTO Users VALUES(0010,'Maggsvisan' ,'Maggie', 'Villarreal', 'embsys');
+
+INSERT INTO House VALUES(100,'Col. La Gloria',155, '8115037272',0001);
+INSERT INTO House VALUES(101, 'Col. Residencial Puerta del Norte', 308, '8119859126',0010);
+
+INSERT INTO Actuator VALUES(201,'ON/OFF',0, 100,'room1');
+INSERT INTO Actuator VALUES(202,'ON/OFF',1, 100,'room2');
+INSERT INTO Actuator VALUES(203,'ON/OFF',0, 101,'room1');
+INSERT INTO Actuator VALUES(204,'ON/OFF',1, 101,'room2');
+
+INSERT INTO Sensor VALUES(301,'TempSens',100,'LR1',19);
+INSERT INTO Sensor VALUES(302,'TempSens',101,'LR2',25.4);
+
+

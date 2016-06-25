@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home IoT Manager</title>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/homeStyle.css">
+
+</head>
+<body>
+	<div id="MainContainer">
+	<div id = "iotManagerHeader">
+		<img src="img/iotpageheader2.gif">
+        
+		<h1 ><span id="userHeader">Welcome Username</span></h1>
+    
+
+	</div>
+	<div id="tabselector">
+        <ul id="tabs">
+            <li id="devices" onclick="showCurrentTab(id)">Devices</li>
+            <li id="profile" onclick="showCurrentTab(id)" >Profile</li>
+            <li id="logout" onclick="showCurrentTab(id)">LOGOUT</li>
+        </ul>
+        <div id="tabcontent">
+
+            <div id="content-devices" class="iotDevices">
+             <b>Devices</b>
+             	<!--Table to add a new device 
+             		<table id="addDeviceTable" border="1">
+             			<tr>
+             				<td>Name:</td>
+             				<td>
+             					<input id="devName" type="text" ></input>
+             				</td>
+             			</tr>
+
+             			<tr>
+             				<td>Type</td>
+             				<td>
+	             				<select id="devType">
+	             					<option>ACTUATOR</option>
+	             					<option>SENSOR</option>		
+	             				</select>
+	             				</td>
+             			</tr>
+ 
+             			<tr>
+             				<td>
+             					<input type="button" id="addDevBoxButton" value="Add Device" color=#FF0000/>
+             				</td>
+             			</tr>
+             		</table>-->
+             	<!--End declaration of table -->
+         
+             	<table id="devicesTable" width="400" height="400" border="1">
+             <!--   <tr>
+                    <input type="button" id="addDeviceBtn" value="+" onclick="addDevices()" />
+                </tr>!-->
+                <tr>
+                    <td><b>Temperature Sensor</b></td>
+                    <td><img src="img/temp.png" id="sensorImg"></td>
+                    <td >Set Point Alarm:<br><input type="text" id="setPoint" value="30"/></td>
+                    <td id = "tempValue">12.3</td>
+                <tr>
+
+                <tr>
+                    <td><b>Foco 1</b></td>
+                    <td><img src="img/foco.jpg" class="focoImg" id="focoImg1"></td>
+                    <td>Room #1</td>
+                    <td><input type="button" value="OFF" id="btnRoom1" class="button"></input></td>
+                </tr>
+
+                <tr>
+                    <td><b>Foco 2</b></td>
+                    <td><img src="img/foco.jpg" class="focoImg" id="focoImg2"></td>
+                    <td>Room #2</td>
+                    <td><input type="button" value="OFF" id="btnRoom2" class="button"></input></td>
+                </tr>
+
+                <tr>
+                    <td><b>Foco 3</b></td>
+                    <td><img src="img/foco.jpg" class="focoImg" id="focoImg3"></td>
+                    <td>Room #3</td>
+                    <td><input type="button" value="OFF" id="btnRoom3" class="button"></input></td>
+                </tr>
+             	</table>
+
+            </div>
+
+            <div id="content-profile" class="iotProfile">
+              <p><b>My IoT Profile</b></p>
+            </div>
+
+        </div>
+    </div>
+    <div id="iotManagerFooter">
+    	All Rights Reserved. <br>
+        Eva Margarita Villarreal <br>
+        Jesús Ramírez Nava <br>
+        Ricardo Elizondo
+	</div>
+	</div>
+</body>
+    <script type="text/javascript" src="js/jquery-2.2.0.js"></script>
+    <script type="text/javascript" src="js/home.js">    </script>
+</html>

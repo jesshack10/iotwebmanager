@@ -1,0 +1,138 @@
+<?php
+	header('Accept: application/json');
+	header('Content-type: application/json');
+	require_once __DIR__ . '/dataLayer.php';
+	
+	$action = $_POST["action"];
+
+	switch($action)
+	{
+		case "LOGIN": verifyLogin();
+					break;
+
+		case "REGISTER": registerUser();
+					break;
+		case "LOGOUT": logOut();
+					break;
+		case "SESSION": getProfile();
+					break;
+
+		case "GETDEV": getDevices();
+					break;
+		case "ADD_DEVICE": addDevice();
+					break;
+	}	
+
+
+function addDevice(){
+	session_start();
+	$username=$_SESSION["username"];
+	$image = $_POST["image"];
+	$devType = $_POST["devType"];
+	$devName = $_POST["devName"];
+
+	$result = addDeviceAction($devName,$devType,$image,'OFF',$houseName,$username,$port);
+
+
+	if($result["status"] == "SUCCESS")
+	{
+		echo json_encode($result);
+	}else
+	{
+		header("HTTP/1.1 406 User not found");
+		die(json_encode(array('message' => "ERROR",'Error Adding the device')));
+	}
+}
+function getDevices(){
+	session_start();
+	$username = $_SESSION["username"];
+	$houseName = $_POST["houseName"];
+	$result = getDevicesAction($username,$houseName);
+
+	if($result[0]["status"] == "SUCCESS")
+	{
+		echo json_encode($result);
+	}
+	elseif($result[0]["status"] == "EMPTY")
+	{
+		echo json_encode($result);
+	}else
+	{
+		header("HTTP/1.1 406 User not found");
+		die(json_encode(array('message' => "ERROR",'Get Devices Error')));
+	}
+
+}
+//VERIFY WHEN A USER LOGIN
+	function verifyLogin()
+	{
+		$username = $_POST["username"];
+		$password = $_POST["pass"];
+
+
+		$result = loginAction($username,$password);
+
+		if($result["statusText"] == "SUCCESS")
+		{
+			echo json_encode($result);
+		}
+		else
+		{
+			header("HTTP/1.1 406 User not found");
+			die(json_encode(array('message' => "ERROR",'code' => 1337)));
+		}
+	}
+
+	function logOut()
+	{
+		session_start();
+		
+		if( isset( $_SESSION['username']) ){
+
+		unset( $_SESSION['username'] );
+		session_destroy();
+		echo json_encode( array('success' => 'Session deleted') );   
+
+		}else{
+
+			die("Session is not set!");
+		}
+	}
+
+	//GEt profile of the user for Home page
+	function getProfile(){
+		session_start();
+		
+		$answer = getProfileData($_SESSION["username"]);
+
+		if (isset($_SESSION["username"]) && $answer["status"] =="SUCCESS")
+		{
+			echo json_encode($answer);
+		}
+		else
+		{
+			header('HTTP/1.1 406 Session has expired, you will be redirected to the login');
+			die(json_encode(array('message' => 'Session has expired.')));
+		}
+	}
+
+	function registerUser()
+	{
+		$name = $_POST["fName"];
+		$lname = $_POST["lName"];
+		$userName = $_POST["username"];
+		$pass = $_POST["pass"];
+
+		$result = registerAction($name,$lname,$userName,$pass);
+
+		if($result["statusText"] == "SUCCESS")
+		{
+			echo json_encode("SUCCESS");
+		}
+		else
+		{
+			header("HTTP/1.1 406 User not found");
+			die(json_encode(array('message' => "ERROR",'code' => 1337)));
+		}
+	}
+?>

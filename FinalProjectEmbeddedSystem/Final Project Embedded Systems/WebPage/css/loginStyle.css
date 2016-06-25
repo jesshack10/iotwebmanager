@@ -1,0 +1,36 @@
+#loginForm{
+	font-size: 20px;
+	text-align: center;
+	font-style: bold;
+	color: white;
+	display: block;
+}
+#submitLogin{
+	padding: 20px;
+	line-height: 5px;
+	font-size: 20px;
+	color: white;
+	background-color:#808000; 
+}
+.image{
+	padding-left: 15em;
+}
+body{
+	background: #BDB76B;
+	padding: 10em;
+	border: 20em;
+}
+a{
+	color:gray;
+}
+img{
+	vertical-align: middle;
+	display:inline;
+}
+.inText{
+	padding: 10px;
+	border: 10px;
+	font-size: 12px;
+	font-style: bold;
+	color: blue;
+}

@@ -1,0 +1,189 @@
+<?php
+	
+	function connect()
+	{
+		$servernameDB = "localhost";
+		$usernameDB = "root";
+		$passwordDB = "";
+		$nameDB	= "IOTDB";
+
+		$connection = new mysqli($servernameDB,$usernameDB,$passwordDB,$nameDB);
+
+		if($connection->connect_error)
+		{
+			return null;
+		}else
+		{
+
+			return $connection;
+		}
+	}
+
+
+	
+	
+	function addDeviceAction($name,$tipo,$image,$state,$house,$username,$port){
+		$conn = connect();
+			if($conn != null)
+			{
+				$sql = "INSERT INTO Devices (name,tipo,image,state,house,username,port) VALUES ('$name','$tipo' ,'$image','$state','$house','$username','$port')";
+			
+				if ($conn->query($sql)){
+						$response = array("status" => "SUCCESS");
+						return $response;
+				} else{
+						$response = array("status" => "FAIL");
+						return $response;
+				}
+			}
+	}
+	function getDevicesAction($username,$houseName)
+	{
+		$conn = connect();
+		$arr = array();
+
+		$sql = "SELECT * FROM Devices WHERE username = '$username' AND house='$houseName'";
+				$result = $conn->query($sql);
+
+				if($result->num_rows >0)//ANSWER WAS GOOD!
+				{
+					while ($row = $result->fetch_assoc()) {
+						
+							$response = array("name" => $row["name"],
+										"tipo" => $row["tipo"],
+										"image" => $row["image"],
+										"state" => $row["state"],
+										"house" => $row["house"],
+										"status" => "SUCCESS" );
+							array_push($arr, $response);
+					}
+
+					return $arr;
+				}else if($result->num_rows ==0){
+
+					return array(array("status" => "EMPTY"));
+				}else{
+					die("Error getting information about this user");
+
+					return array(array("status" => "FAIL" ));
+				}
+
+			
+	}
+
+		function registerAction($name,$lname,$userName,$pass)
+		{
+			$conn = connect();
+			if($conn != null)
+			{
+				$sql = "INSERT INTO Users (fName,lName,username,pass) VALUES ('$name','$lname' ,'$userName','$pass')";
+			
+				if ($conn->query($sql)){
+						$response = array("statusText" => "SUCCESS");
+						return $response;
+				} else{
+						$response = array("statusText" => "FAIL");
+						return $response;
+				}
+			}
+			
+		}
+
+		function getProfileData($username)
+		{
+			$conn = connect();
+			if($conn != null)
+			{
+				$sql = "SELECT * FROM Users WHERE username = '$username'";
+				$result = $conn->query($sql);
+
+				if($result->num_rows >0)//ANSWER WAS GOOD!
+				{
+					while ($row = $result->fetch_assoc()) {
+						
+							$response = array("fName" => $row["fName"],
+										"lName" => $row["lName"],
+										"username" => $row["username"],
+										"password" => $row["passwrd"],
+										"email" => $row["email"],
+										"gender" => $row["gender"],
+										"country"=>$row["country"],
+										"typeUser" => "root",
+										"status" => "SUCCESS" );
+					}
+
+					return $response;
+				}else{
+
+						die("Error getting information about this user");
+					}
+				}
+			}
+		}
+
+	//This function is call every time a login is performed
+	function loginAction($usernameU,$password)
+	{
+		$conn = connect();
+		if($conn != null)
+		{
+			$sql = "SELECT * FROM Users WHERE username = '$usernameU' AND passwrd = '$password'";
+
+			$result = $conn->query($sql);
+
+			if($result->num_rows>0)
+			{
+				while($row = $result->fetch_assoc())
+				{
+					$response = array("statusText" => "SUCCESS", "fName" => $row["fName"],"username" => $usernameU,"pass" => $row["passwrd"]);
+
+				 session_start(); //Session started!
+			    	 $_SESSION["username"] = $row["username"];
+
+				}
+				return $response;
+
+			}else{
+					$response = array("statusText" => "FAIL");
+					return $response;
+			}
+		}
+	}
+
+	# Query to retrieve a user data
+    function validateUser($userName)
+    {
+        # Open and validate the Database connection
+    	$conn = connect();
+
+        if ($conn != null)
+        {
+        	$sql = "SELECT * FROM Users WHERE userName = '$userName'";
+			$result = $conn->query($sql);
+			
+			# The current user exists
+			if ($result->num_rows > 0)
+			{
+				while($row = $result->fetch_assoc()) 
+		    	{
+					$conn->close();
+					return array("status" => "SUCCESS", "fName" => $row['fName'], "lName" => $row['lName'], "password" => $row['passwrd']);
+				}
+			}
+			else
+			{
+				# The user doesn't exists in the Database
+				$conn->close();
+				return array("status" => "ERROR");
+			}
+        }
+        else
+        {
+        	# Connection to Database was not successful
+        	$conn->close();
+        	return array("status" => "ERROR");
+        }
+    }
+ 
+
+?>
